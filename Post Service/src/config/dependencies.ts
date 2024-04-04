@@ -1,15 +1,25 @@
 import { postRepository } from "../app/repository";
-import { addPostUsecase } from "../useCases/addPostuseCase";
-import { showAllPostUsecase } from "../useCases/showAllPostUsecase";
+import { AddPost_Usecase,showAllPostUsecase,likePost_useCase,editPost_useCase
+,deletePost_useCase,addComment_useCase,getPost_useCase} from "../useCases/postUsecase/index";
+import {createUserUsecase} from '../useCases/consumeUsecase/authConsumeUsecase'
+
 
 
 const useCase:any ={
-    addPostUsecase,
-    showAllPostUsecase
+    AddPost_Usecase,
+    showAllPostUsecase,
+    likePost_useCase,
+    editPost_useCase,
+    deletePost_useCase,
+    addComment_useCase,
+    getPost_useCase
+}
+const consumeUsecase:any = {
+    createUserUsecase
 }
 
-const repository = {
+const repository:any = {
     postRepository
 }
 
-export default {useCase,repository}
+export default {useCase,repository,consumeUsecase}

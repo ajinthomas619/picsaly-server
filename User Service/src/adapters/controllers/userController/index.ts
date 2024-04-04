@@ -6,6 +6,10 @@ import getSearchUserController from "./getSearchUserController";
 import getUserByIdController from "./getUserByIdController";
 import getUserDataController from "./getUserDataController";
 import getUsersByNameController from "./getUsersByNameController";
+import followUserController from "./followUserController";
+import blockUserController from "./blockUserController";
+import unblockUserController from "./unblockUserController";
+import savePostController from "./savePostController";
 export default(dependencies:any) => {
 return {
     addProfileController:addProfileController(dependencies),
@@ -15,7 +19,10 @@ return {
     getSearchUserController:getSearchUserController(dependencies),
     getUserByIdController:getUserByIdController(dependencies),
     getUserDataController:getUserDataController(dependencies),
-    getUsersByNameController:getUsersByNameController(dependencies)    
-
+    getUsersByNameController:getUsersByNameController(dependencies)    ,
+    followUserController:followUserController(dependencies),
+    blockUserController:blockUserController(dependencies),
+    unblockUserController:unblockUserController(dependencies), 
+    savePostController:savePostController(dependencies)
 }
 }

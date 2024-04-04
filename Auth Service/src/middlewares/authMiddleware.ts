@@ -13,8 +13,10 @@ const authMiddleware=(req:Request,res:Response,next:NextFunction)=>{
         try{
             console.log("tryyy")
             console.log(req.headers.authorization)
-            // const decode = jwt.verify(req.headers.authorization,process.env.ACCESS_JWT_SECRET_KEY)
-            // console.log("decode :=",decode) 
+            const token = req.headers.authorization.split(' ')[1]
+            const secretKey:any = process.env.ACCESS_SECRET_KEY
+             const decode = jwt.verify(token,secretKey )
+             console.log("decode :=",decode) 
             next()
         }
         catch(error){

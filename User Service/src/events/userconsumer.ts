@@ -1,5 +1,5 @@
+import { createUserController } from '../adapters/controllers/consumeController/createUserController'
 import {kafka} from '../config/kafkaClient'
-import {addProfileController} from '../adapters/controllers/userController/addProfileController'
 
 const consumer = kafka.consumer({groupId:"user-service"})
 
@@ -14,7 +14,7 @@ export const userconsumer = async(dependencies:any)=>{
                 const jsondata=JSON.parse(jsonstring)
                 const messagetype=jsondata?.type
                 if(messagetype == 'createUser'){
-                    await addProfileController(dependencies,jsondata.data)
+                    await createUserController(dependencies,jsondata.data)
                 }
             }
         })
@@ -22,4 +22,4 @@ export const userconsumer = async(dependencies:any)=>{
     catch(error){
         console.log('Error in user consumer',error)
     }
-}
+} 

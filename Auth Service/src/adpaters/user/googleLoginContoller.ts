@@ -1,5 +1,6 @@
 import { Request,Response } from "express";
 import { createAccessToken } from  "../../utils/jwt"
+import { authProducer } from "../../events/authproducer";
 
 export default (dependencies:any) => {
     const { useCase: { loginWithGoogle_Usecase  }} = dependencies
@@ -42,7 +43,7 @@ if(response.status){
         httpOnly:true,
         secure:true
     })
-   
+   await authProducer(userData,'authTopic','createUser')
    
     res.status(201).json({status:true,accessToken:accessToken,user:user})
     

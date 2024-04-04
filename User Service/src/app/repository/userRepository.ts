@@ -1,3 +1,4 @@
+import { connections } from "mongoose";
 import User from "../database/Schema";
 
 
@@ -8,10 +9,11 @@ export default{
 
             const userData = {
                 "basicInformation.userId" : data._id,
-                "basicInformation.fullName":data.fullName,
+                "basicInformation.fullname":data.fullname,
                 "basicInformation.email":data.email,
                 "profile.profileUrl":data.profilePic,
                 "basicInformation.isGoogle":data.isGoogle,
+                "basicInformation.username":data.name,
                 
             }
             const response = await User.create(userData)
@@ -44,7 +46,7 @@ export default{
     },
     getAllUsers:async()=>{
         try{
-            let userData = []
+            let userData:any[] = []
             const users = await User.find()
             console.log("all users",users)
             Promise.all(users.map(async(data:any)=>{
@@ -72,7 +74,8 @@ export default{
     getUsersByName:async(fullName:string)=>{
         try{
         if(fullName.trim() !== ''){
-            const users = await User.find({'basicInformation.fullName':{$regex:'^'+name,$options: 'i'}})
+            const users = await User.find({'basicInformation.fullName': {$regex: '^' + fullName, $options: 'i'}});
+
             if(users.length>0){
                 return {status:true,data:users}
             }
@@ -221,5 +224,113 @@ export default{
         else{
             return {status:false}
         }
+    },
+    followUser:async(currentUserId:string,followedUserid:string) =>{
+        const user:any = await User.findOne({'basicInformation.userId':currentUserId})
+        const userAlreadyFollows = user.socialConnections.following.some((connection:any) => connection.userId === followedUserid)
+        if(userAlreadyFollows){
+            const updatedUser = await User.findOneAndUpdate({'basicInformation.userId':currentUserId},
+            {$pull:{'socialConnections.following':{userId:followedUserid}}})
+            const updatedFolowedUser = await User.findOneAndUpdate({'basicInformation.userId':followedUserid},
+            {$pull:{'socialConnections.followers':{userId:currentUserId}}})
+            console.log("updated user data",updatedUser)
+            console.log("updated follwed user data",updatedFolowedUser)
+            if(updatedUser && !updatedFolowedUser){
+                return {status:true,message:"unfollowed success"}
+            }
+            else{
+                return {status:false,message:"failed"}
+            }
+        }
+        else{
+            const userDetails:any = await User.findOne({'basicInformation.userId':followedUserid})
+            const updatedUser = await User.findOneAndUpdate({'basicInformation.userId': currentUserId},{  $push: { 'socialConections.following': { userId: followedUserid,profile: userDetails.profile.profileUrl, fullName: userDetails.basicInformation.fullName}}});      
+            const updateFollowedUser = await User.findOneAndUpdate({'basicInformation.userId': followedUserid},{  $push: { 'socialConections.followers': { userId: currentUserId,profile: user.profile.profileUrl, fullName: user.basicInformation.fullName}}});      
+            console.log("update user data",updatedUser)
+            console.log("updated follow user data",updateFollowedUser)
+            if(updatedUser && updateFollowedUser){
+                return {status:true,message:"Followed success"}
+            }
+            else{
+                return{status:false,message:"failed"}
+            }
+        }
+    },
+    blockUser:async (userId:any,userToBlockId:any) =>{
+        try{
+            const user = await User.findById(userId)
+            const userToBlock = await User.findById(userToBlockId)
+            if(!user || userToBlock){
+                throw new Error("User or user to block not found")
+            }
+            if(user.socialConnections?.blockedUsers.includes(userToBlockId)){
+                throw new Error('This user is already blocked')
+        }
+        user?.socialConnections?.blockedUsers.push(userToBlockId)
+        await user.save()
+
+        return "user blocked successfully"
     }
+    catch(error){
+        console.log("error in blocking user",error)
+    }
+ 
+},
+unblockUser:async(userId:any,userToUnblockId:any) =>{
+    try{
+        const user = await User.findById(userId)
+        if(!user){
+            throw new Error("User not found")
+        }
+        const index = user.socialConnections!.blockedUsers.indexOf(userToUnblockId);
+        if(index === -1){
+            throw new Error("user is not blocked")
+        }
+        user.socialConnections?.blockedUsers.splice(index,1)
+        await user.save()
+
+        return "User unblocked successfully"
+    }
+    catch(error){
+        console.log("error in unblocking user",error)
+    }
+},
+savePost:async(data:any) => {
+    try{
+        console.log("data for saving post",data);
+        
+        const  {userId,postId} =data
+        console.log("user idd",data.userId);
+        
+
+        
+        const user:any = await User.findById(data.userId)
+        if(user){
+            if(!user.activity.saved.includes(postId)){
+                user.activity.saved.push(postId)
+            }
+            else{
+                const index = user.activity.saved.indexOf(postId)
+                if(index !== -1){
+                    user.activity.saved.splice(index,1)
+                }
+            }
+            const response = await  user.save()
+            if(response){
+                return {status:true,data:response}
+            }
+            else{
+                return {status:false,message:"Error while saving post"}
+            }
+        }
+        else{
+            return {status:false,message:"User not found"}
+        }
+    }
+    catch(error){
+        console.log("error in saving post",error);
+        
+    }
+}
+
 }

@@ -1,28 +1,43 @@
 import { Request, Response } from "express";
+import { Multer } from "multer";
 
-export default (dependencies: any) => {
-    const { useCase: { addPostUsecase } } = dependencies;
+interface MulterFile extends Express.Multer.File {
+    filename: any;
+}
 
-    const extractImageFilenames = (files: Express.Multer.File[]) => {
-        return files.map((file: Express.Multer.File) => file.filename);
-    };
+export default (dependencies: any) => {    
 
+    const { useCase: { AddPost_Usecase } } = dependencies;
+    
     const addPostController = async (req: Request, res: Response) => {
         try {
+            console.log('entered to add post controller');
+        
+            console.log('try daaa try');
             const { body, files } = req;
+            console.log(req?.file,"FILE");
+            console.log(req?.files,"FILESSS");
+            
+            console.log(req.body, "its a request");
+            console.log("files", files);
 
             if (!files || !Array.isArray(files)) {
                 return res.status(400).json({ error: "No files uploaded" });
             }
-
-            const images: string[] = extractImageFilenames(files);
-
+           
+            const uploadedFiles = Array.isArray(files) ? files : [files];
+            const images: any[] = uploadedFiles.map((file: MulterFile) => file.filename);
+            console.log("images", images);
+            
             const data = {
-                images,
-                postData: body,
+                image: images,
+                data: body,
             };
-
-            const response = await addPostUsecase(dependencies).executeFunction(data);
+            console.log("imggfggg", data);
+            
+            const response = await AddPost_Usecase(dependencies).executeFunction(data);
+            console.log('responseee', response);
+           
 
             if (response.status) {
                 return res.status(200).json({ status: true, data: response });
@@ -30,8 +45,8 @@ export default (dependencies: any) => {
                 return res.status(400).json({ message: "Error adding post", ...response });
             }
         } catch (error) {
-            console.error("Error in addPostController", error);
-            return res.status(500).json({ message: "Internal server error" });
+            console.log("error in addpostcontroller", error);
+            return res.status(500).json({ error: "Internal server error" });
         }
     };
 

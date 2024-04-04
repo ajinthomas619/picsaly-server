@@ -6,6 +6,8 @@ const DEFAULT_OFFSET = -1
 
 export const authProducer = async(sendData:any,topic:any,type:any) => {
     try{
+        console.log(sendData,"sendDatasendData");
+        
         if(!sendData){
             throw new Error("send data doesn not exist")
         }
@@ -15,6 +17,7 @@ export const authProducer = async(sendData:any,topic:any,type:any) => {
 
         if(type === 'createUser'){
             messageData =sendData
+            console.log("senmdfsd",sendData)
         }
         else if(type === 'create-search-user'){
           messageData = {
@@ -39,9 +42,10 @@ export const authProducer = async(sendData:any,topic:any,type:any) => {
             topic,
             messages:[{value:(JSON.stringify(messagePayload))}]
         })
-        if(result && result[0] && result[0]?.error){
-            throw new Error("Messaeg Production Failed")
-        }
+        console.log("result freom producer",result)
+        // if(result && result[0] && result[0]?.error){
+        //     throw new Error("Messaeg Production Failed")
+        // }
 
     }
     catch(error){

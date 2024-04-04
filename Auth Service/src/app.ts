@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser'
 dotenv.config()
 
 declare module 'express-session'{
-  interface SessionData{
+  interface Session{
     userData: {
       _id:string,
       username:string

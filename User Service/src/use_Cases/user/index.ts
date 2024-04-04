@@ -5,6 +5,10 @@ import { getAllUsersUsecase } from "./getAllUsersUsecase";
 import { getUserByIdUsecase } from "./getUserByIdUsecase";
 import { getUserByNameUsecase } from "./getUserByNameUsecase";
 import { getUserDataUsecase } from "./getUserDataUsecase";
+import { followUser_Usecase } from "./followUserUsecase";
+import { BlockUser_Usecase } from "./blockUserUsecase";
+import { SavePost_Usecase } from "./savePostUsecase";
+import  {UnblockUser_Usecase} from "./unblockUserUsecase"
 
 export {
     addProfileImageUsecase,
@@ -13,5 +17,9 @@ export {
     getAllUsersUsecase,
     getUserByIdUsecase,
     getUserByNameUsecase,
-    getUserDataUsecase 
+    getUserDataUsecase ,
+    followUser_Usecase,
+    BlockUser_Usecase,
+    SavePost_Usecase,
+    UnblockUser_Usecase
 }

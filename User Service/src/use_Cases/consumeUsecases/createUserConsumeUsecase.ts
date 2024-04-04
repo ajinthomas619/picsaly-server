@@ -1,4 +1,5 @@
 export const createUserUsecase = (dependencies:any)=>{
+    console.log("enterd to create user consume usecase")
     const {repository:{userRepository}} = dependencies
     const executeFunction = async(data:any) =>{
         const response = await userRepository.createUser(data)

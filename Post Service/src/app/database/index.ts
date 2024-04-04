@@ -1,4 +1,3 @@
-import { Post } from "./postSchema";
-export{
-    Post
-}
+import schema from "./schema";
+
+export { schema };

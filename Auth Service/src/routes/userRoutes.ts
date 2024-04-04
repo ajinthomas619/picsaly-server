@@ -13,7 +13,9 @@ export default (dependencies:any)=>{
         verifyOtpController,
         googleLoginContoller,
         logoutController,
-        adminloginController
+        adminloginController,
+        refreshTokenController
+        
     } = userController(dependencies)
 
 router.post('/', loginController)
@@ -22,6 +24,7 @@ router.post('/verify-otp',verifyOtpController)
 router.post('/googleLogin',googleLoginContoller)
 router.get('/logout',logoutController)
 router.post('/adminlogin',adminloginController)
+router.get('/refresh',refreshTokenController)
 
  
  

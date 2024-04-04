@@ -1,4 +1,4 @@
-const getSearchUserUsecase = (dependencies:any) => {
+export const getSearchUserUsecase = (dependencies:any) => {
     const {repository:{userRepository}} = dependencies
 
     const executeFunction = async(user:string) => {

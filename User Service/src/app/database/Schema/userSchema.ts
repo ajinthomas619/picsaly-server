@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
 basicInformation:{
 userId:String,
-userName:String,
-fullName:String,
+username:String,
+fullname:String,
 email:String,
 password:String,
 phone:String,
@@ -39,6 +39,10 @@ socialConnections:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }],
+    blockedUsers:[{
+      type:mongoose.Schema.Types.ObjectId, 
+      ref:'User'
+    }]
   
 },
 activity:{
@@ -58,6 +62,11 @@ activity:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'Post',
   }],
+  shares:[{
+  type:mongoose.Schema.Types.ObjectId,
+  ref:'Post'
+
+  }]
 },
 })
 

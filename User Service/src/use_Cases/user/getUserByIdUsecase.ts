@@ -3,6 +3,8 @@ export const getUserByIdUsecase = (dependencies:any)=>{
         const {repository:{userRepository}} = dependencies
 
         const executeFunction = async(id:any)=>{
+            console.log("enterd to get User By Id Usecase");
+            
             const response = await userRepository.getUserById(id)
             if(response.status){
                 return {status:true,data:response.data}

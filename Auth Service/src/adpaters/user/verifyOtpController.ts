@@ -1,5 +1,6 @@
 import { Request,Response } from "express";
 import dependencies from "../../config/dependencies";
+import { authProducer } from "../../events/authproducer";
 
 export default (dependencies:any) => {
     const {
@@ -18,12 +19,13 @@ const verifyOtpcontroller = async (req:Request, res:Response) => {
         const data = req.session.userData;
         console.log("dataaaaa=====",data)
         const response = await verifyOtp_Usecase(dependencies).executeFunction(req.session.userData)
+        console.log( response.user," response.user response.user response.user");
+        
         if(response.status){
-            console.log("response is ==",response)
 
 
             const { accessToken,refreshtToken} = response
-            const user = response.user.response
+            const user = response.user.user
 
 
             req.session.refreshtoken = refreshtToken;
@@ -37,17 +39,22 @@ const verifyOtpcontroller = async (req:Request, res:Response) => {
                 httpOnly:true,
                 secure:true
             })
+            console.log(user ,"user user ");
+            console.log(user._id ,"user._id user._id ");
+            
+
             const userData = {
-                _id:user?.userId?._id ,
-                name:user?.name,
+                _id:user._id ,
+                name:user?.username,
                 email:user?.email,
-                phone:user?.phone|| "",
+                phone:user?.mobile || "",
                 isGoogle:user?.isGoogle,
 
             }
-            console.log('User Data :---',userData);
-            req.session.otp = undefined;
-            req.session.userData = undefined;
+            console.log(userData,"userDatauserData");
+            await authProducer(userData,'authTopic','createUser')
+             console.log('User Data :---',userData);
+        
 
             res.status(201).json({status: true,accessToken: accessToken,user: user})
         }else{

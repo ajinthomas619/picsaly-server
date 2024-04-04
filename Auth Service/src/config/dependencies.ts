@@ -4,6 +4,7 @@ import { userLogin_useCase } from '../useCases/user/login';
 import {verifyOtp_Usecase} from '../useCases/user/verifyotp'
 import { loginWithGoogle_Usecase } from '../useCases';
 import { adminAuth_UseCase } from '../useCases';
+import { refreshTokeUsecase } from '../useCases';
 
 
 const useCase:any ={
@@ -11,7 +12,8 @@ const useCase:any ={
     userLogin_useCase,
     verifyOtp_Usecase,
     loginWithGoogle_Usecase,
-    adminAuth_UseCase
+    adminAuth_UseCase,
+    refreshTokeUsecase
     
 }
 const repository:any={
