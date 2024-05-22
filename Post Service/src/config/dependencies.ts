@@ -1,6 +1,6 @@
 import { postRepository } from "../app/repository";
 import { AddPost_Usecase,showAllPostUsecase,likePost_useCase,editPost_useCase
-,deletePost_useCase,addComment_useCase,getPost_useCase} from "../useCases/postUsecase/index";
+,deletePost_useCase,addComment_useCase,getPost_useCase,getAllPostOfUserUsecase} from "../useCases/postUsecase/index";
 import {createUserUsecase} from '../useCases/consumeUsecase/authConsumeUsecase'
 
 
@@ -12,7 +12,8 @@ const useCase:any ={
     editPost_useCase,
     deletePost_useCase,
     addComment_useCase,
-    getPost_useCase
+    getPost_useCase,
+    getAllPostOfUserUsecase
 }
 const consumeUsecase:any = {
     createUserUsecase

@@ -214,6 +214,7 @@ export default{
            
             
             const response = await schema.Post.findById(id)
+           
         
             
             if(!response){
@@ -228,6 +229,22 @@ export default{
                 console.log("error in fetching post",error)
             }
         },
+
+        getAllPostOfUser:async(userId:any) => {
+            try{
+                const response = await Post.find({createdBy:userId}).sort({createdAt:-1})
+                if(response && response.length>0 ){
+                    return {status:true,data:response}
+                }
+                else{
+                    return {status:false,message:"No Post found for the user"}
+                }
+            }
+            catch(error){
+                console.error("Error from getAllPost OfUser function",error)
+                return {status:false,message:"An error ocurred while fetching user post"}
+            }
+        }
 
      
     }

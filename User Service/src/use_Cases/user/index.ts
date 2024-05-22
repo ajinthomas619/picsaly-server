@@ -2,7 +2,7 @@ import { addProfileImageUsecase } from "./addProfileImageUsecase";
 import { addProfileUsecase } from "./addProfileUsecase";
 import { editUserUsecase } from "./editProfileUsecase";
 import { getAllUsersUsecase } from "./getAllUsersUsecase";
-import { getUserByIdUsecase } from "./getUserByIdUsecase";
+import { getUserByIdUse_Case } from "./getUserByIdUsecase";
 import { getUserByNameUsecase } from "./getUserByNameUsecase";
 import { getUserDataUsecase } from "./getUserDataUsecase";
 import { followUser_Usecase } from "./followUserUsecase";
@@ -15,7 +15,7 @@ export {
     addProfileUsecase,
     editUserUsecase,
     getAllUsersUsecase,
-    getUserByIdUsecase,
+    getUserByIdUse_Case,
     getUserByNameUsecase,
     getUserDataUsecase ,
     followUser_Usecase,

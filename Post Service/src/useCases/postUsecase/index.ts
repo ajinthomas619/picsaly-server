@@ -6,7 +6,7 @@ import {deletePost_useCase} from './deletePostUsecase'
 import {editPost_useCase} from './editPostUsecase'
 import { getPost_useCase } from "./getPostUsecase"
 import {likePost_useCase} from './likePostUsecase'
-
+import { getAllPostOfUserUsecase } from "./getAllPostOfUserUsecase"
 
 export{
     AddPost_Usecase,
@@ -15,5 +15,6 @@ export{
     deletePost_useCase,
     editPost_useCase,
     getPost_useCase,
-    likePost_useCase
+    likePost_useCase,
+    getAllPostOfUserUsecase
 }

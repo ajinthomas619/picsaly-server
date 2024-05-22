@@ -1,4 +1,4 @@
-export const getUserByIdUsecase = (dependencies:any)=>{
+export const getUserByIdUse_Case = (dependencies:any)=>{
     try{
         const {repository:{userRepository}} = dependencies
 

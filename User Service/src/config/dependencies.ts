@@ -3,7 +3,7 @@ import { addProfileUsecase } from '../use_Cases/user/addProfileUsecase'
 import {addProfileImageUsecase} from '../use_Cases/user/addProfileImageUsecase'
 import {editUserUsecase} from '../use_Cases/user/editProfileUsecase'
 import {getAllUsersUsecase}  from '../use_Cases/user/getAllUsersUsecase'
-import {getUserByIdUsecase} from '../use_Cases/user/getUserByIdUsecase'
+import {getUserByIdUse_Case} from '../use_Cases/user/getUserByIdUsecase'
 import {getUserByNameUsecase} from  '../use_Cases/user/getUserByNameUsecase'
 import {getUserDataUsecase} from '../use_Cases/user/getUserDataUsecase'
 import {getSearchUserUsecase} from '../use_Cases/user/getSearchUserUsecase'
@@ -17,7 +17,7 @@ const useCase:any = {
     addProfileImageUsecase,
     editUserUsecase,
     getAllUsersUsecase,
-    getUserByIdUsecase,
+    getUserByIdUse_Case,
     getUserByNameUsecase,
     getUserDataUsecase,
     getSearchUserUsecase,

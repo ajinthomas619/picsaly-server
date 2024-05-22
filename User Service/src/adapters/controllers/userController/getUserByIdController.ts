@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
 export default (dependencies: any) => {
-  console.log("enterd to get userbyid controller");
-  const { useCase: getUserByIdUsecase } = dependencies;
+
+  const { useCase: {getUserByIdUse_Case} } = dependencies;
 
   const getUserByIdController = async (req: Request, res: Response) => {
     try {
@@ -10,9 +10,7 @@ export default (dependencies: any) => {
 
       const id = req.body.id;
       console.log("idd", id);
-      const response = await getUserByIdUsecase(dependencies).executeFunction(
-        id
-      );
+      const response = await getUserByIdUse_Case(dependencies).executeFunction(id);
       console.log("resxponseee", response);
       if (response.status) {
         res.status(200).json({ status: true, data: response.data });
@@ -20,7 +18,7 @@ export default (dependencies: any) => {
         res.status(404).json({ status: false });
       }
     } catch (error) {
-      console.log("error in getuserbuid controller", error);
+      console.log("error in getuserbyid controller", error);
     }
   };
   return getUserByIdController;

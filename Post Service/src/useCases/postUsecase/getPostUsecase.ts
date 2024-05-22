@@ -8,8 +8,7 @@ export const getPost_useCase = (dependencies:any) =>{
     const executeFunction = async(id:string) => {
         try{
             const response = await postRepository?.getPost(id)
-            const user = await postRepository?.findUser(response.data.createdBy)
-            console.log(user.user)
+          
             if(response.status){
                 return {
                     status:true,

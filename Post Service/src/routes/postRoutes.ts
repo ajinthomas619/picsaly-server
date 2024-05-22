@@ -1,6 +1,7 @@
 import express from 'express'
 import { postController } from '../adapters/controllers'
 import { upload } from '../utils/multer/multerSetup'
+import getAllPostOfUserController from '../adapters/controllers/postController/getAllPostOfUserController'
 
 
 
@@ -16,6 +17,7 @@ export default (dependencies:any) =>{
         deletePostController,
         likePostController,
         addCommentController,
+        getAllPostOfUserController
 
     } = postController(dependencies)
 
@@ -26,6 +28,7 @@ export default (dependencies:any) =>{
     router.delete('/delete-post/:id',deletePostController)
     router.post('/like-post/:id',likePostController)
     router.post('/comment-post/:id',addCommentController)  
+    router.get("/getAllPost",getAllPostOfUserController)
 
     return router
 }

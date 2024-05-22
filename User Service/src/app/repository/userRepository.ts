@@ -304,7 +304,7 @@ savePost:async(data:any) => {
         
 
         
-        const user:any = await User.findById(data.userId)
+        const user:any = await User.findOne({"basicInformation.userId": data.userId})
         if(user){
             if(!user.activity.saved.includes(postId)){
                 user.activity.saved.push(postId)

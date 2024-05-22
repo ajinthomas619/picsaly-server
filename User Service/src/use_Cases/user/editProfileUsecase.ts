@@ -1,14 +1,17 @@
+
+import { userData } from "../../utils/interfaces/userInterface"
+
 export const editUserUsecase = (dependencies:any)=>{
     try{
         const {repository:{userRepository}}=dependencies
-        const executeFunction = async(data:any,userId:string)=>{
+        const executeFunction = async(data:userData)=>{
             console.log("edituser data",data)
-           const response = await userRepository.editUserProfile(data,userId)
+           const response = await userRepository.editUserProfile(data)
            console.log("response of edit user profile",response)
            if(response){
-            const {fullName,userName,userId,phone,gender} = response.user.basicInformation
+            const {fullname,username,userId,phone,gender} = response.user.basicInformation
             const {bio} = response.user.profile
-            const data = {fullName,userName,userId,phone,gender,bio}
+            const data = {fullname,username,userId,phone,gender,bio}
             console.log("deiii",data)
             return {status: response.status,message:response.message,user:data}
            }

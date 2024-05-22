@@ -24,7 +24,7 @@ import express from 'express'
     router.get('/getAllUsers',getAllUsersController)
     router.get('/getSearchUser/:user',getSearchUserController)
     router.post('/addProfile',addProfileController)
-    router.post('editProfile',editProfileController)
+    router.post('/editProfile',editProfileController)
     router.post('/addProfileImage',upload.single("file"),addProfileImageController)
     router.post('/getUsersByName',getUsersByNameController)
     router.post('/getUserById',getUserByIdController)
