@@ -40,7 +40,7 @@ export default (dependencies: any) => {
            
 
             if (response.status) {
-                return res.status(200).json({ status: true, data: response });
+                return res.status(200).json({ status: true, data: response.data });
             } else {
                 return res.status(400).json({ message: "Error adding post", ...response });
             }

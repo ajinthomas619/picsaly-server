@@ -22,6 +22,7 @@ export default(dependencies:any) =>{
     }
 
     const user = await addUser_useCase(dependencies).executeFunction({username,name,email,mobile,password})
+    console.log("the userrr",user)
     if(user?.status){
         const {data,otp} = user
        req.session.userData = data
@@ -29,7 +30,8 @@ export default(dependencies:any) =>{
        req.session.otp = otp
        console.log("otp===",otp)
        res.json({
-        status: response?.status,
+        status: true,
+        data:data
 
        })
 

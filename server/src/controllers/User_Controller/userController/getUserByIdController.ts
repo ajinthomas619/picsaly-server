@@ -9,7 +9,7 @@ export default (dependencies: any) => {
    
 
       const id = req.params.id;
-      console.log("idd", id);
+   
       const response = await getUserByIdUse_Case(dependencies).executeFunction(id);
  
       if (response.status) {

@@ -5,16 +5,16 @@ export const likeComment_useCase = (dependencies:any) => {
 
     const executeFunction = async(
         postId:string,
-        commentId:string,
         userId:string,
-        isLiked:boolean
+        commentId:string,
+        Liked:boolean
     ) => {
         try{
         const response = await postRepository.likeComment(
             postId,
-            commentId,
             userId,
-            isLiked
+            commentId,
+            Liked
         )
         if(response.status){
             return {status:true,message:response.message}
@@ -25,6 +25,7 @@ export const likeComment_useCase = (dependencies:any) => {
     }
     catch(error){
         console.log("error in likecommentusecase",error)
+    
     }
 }
 return {executeFunction}

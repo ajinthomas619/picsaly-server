@@ -9,18 +9,20 @@ export default (dependencies:any) => {
     const likeCommentController = async(req:Request,res:Response) => {
         try {
             const {commentId} = req.params
-            const {postId,userId,isLiked} = req.body
+            const {postId,userId,Liked} = req.body
             const response = await likeComment_useCase(dependencies).executeFunction(
                 postId,
                 userId,
                 commentId,
-                isLiked
+                Liked
             )
-
+              console.log("the like body",req.body)
+              console.log("the comment id",commentId)
             if(response.status){
                 res.status(200).json({status:true,message:response.message})
             }
             else{
+                console.log("the response messsage",response.message)
                 res.status(400).json({status:false,message:response.message})
             }
         } catch (error) {

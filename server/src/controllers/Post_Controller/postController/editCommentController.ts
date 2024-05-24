@@ -7,12 +7,16 @@ export default(dependencies:any) => {
     } =dependencies
     const editCommentController = async(req:Request,res:Response)=>{
         try {
-            const {postId} = req.params
-            const commentData = req.body
+            const postId = req.params.postId
+            const commentData = req.body.comment
+            const commentId = req.body.commentid
+            console.log("the params",req.params)
+            console.log("the body",req.body)
 
             const response = await editComment_useCase(dependencies).executeFunction(
                 postId,
-                commentData
+                commentData,
+                commentId
             )
             if(response.status){
                 res.status(200).json({status:true,message:response.message})

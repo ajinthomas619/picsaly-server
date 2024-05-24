@@ -9,7 +9,7 @@ export const AddPost_Usecase = (dependencies:any) => {
         const response = await postRepository?.createPost(data)
         console.log("heyyy",response)
         if(response.status){
-            return {status:true,response:response.data}
+            return {status:true,data:response.data}
         }
         else{
             return {status:false,message:"post creation failed"}

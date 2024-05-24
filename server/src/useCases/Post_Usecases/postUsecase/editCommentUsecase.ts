@@ -7,10 +7,12 @@ export const editComment_useCase = (dependencies:any) => {
 
     const executeFunction = async(
         postId:string,
-        commentData:CommentObject
+        commentData:string,
+        commentId:string
     ) => {
         try{
-            const response = await postRepository.editComment(postId,commentData)
+            console.log("the comment data",commentData)
+            const response = await postRepository.editComment(postId,commentData,commentId)
             if(response.status){
                 return{status:true,message:response.message}
             }

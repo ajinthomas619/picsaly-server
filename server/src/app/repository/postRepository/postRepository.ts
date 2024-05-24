@@ -26,7 +26,7 @@ export default {
         return {
           status: true,
           message: "Post created successfully",
-          post: postWithUser,
+          data: postWithUser,
         };
       } else {
         throw new Error("Error in creating the post");
@@ -221,21 +221,24 @@ export default {
       return { status: false, message: "error in adding reply" };
     }
   },
-  editComment: async (postId: string, commentData: CommentObject) => {
+  editComment: async (postId: string, commentData: string,commentId:string) => {
     try {
-      const commentId = commentData.commentId;
+      console.log("hi daaa")
+      console.log("th epost id",postId)
       const post = await Post.findById(postId);
+      console.log("the post",post)
+      const commentObjectId = new Types.ObjectId(commentId)
+      console.log("the comment objectid",commentObjectId)
       if (!post) {
         return { status: false, message: "Post not found" };
       }
-      const comment = post.comments.find(
-        (comment) => comment?._id?.toString() === commentId
-      );
+      const comment = post.comments.find(comment => comment && comment._id && comment._id.equals(commentObjectId));
+      console.log("the comment",comment)
       if (!comment) {
         return { status: false, message: "comment not found" };
       }
 
-      comment.text = commentData.editedComment;
+      comment.text = commentData;
 
       const newComment = await post.save();
       if (newComment) {
@@ -248,21 +251,29 @@ export default {
   },
   likeComment: async (
     postId: string,
-    commentId: string,
     userId: string,
-    isLiked: Boolean
+    commentId: string,
+    Liked: Boolean
   ) => {
     try {
-      if (!isLiked) {
+      if (!Liked) {
+        console.log("the comment idddddddddd",commentId)
+        console.log("the userssss idddd",userId)
+
         const post = await Post.findById(postId);
+        console.log("the like comme",post)
         if (!post) {
           return { status: false, message: "post not found" };
         }
         const comment = post.comments.find(
           (comment) => comment?._id?.toString() === commentId
         );
+        console.log("the like commewnt",comment)
         if (!comment) {
           return { status: false, message: "Comment not found" };
+        }
+        if (comment.likes.includes(userId)) {
+            comment.likes = comment.likes.filter((id) => id !== userId)
         }
         comment.likes.push(userId);
 

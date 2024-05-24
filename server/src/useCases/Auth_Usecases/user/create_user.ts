@@ -14,6 +14,7 @@ export const addUser_useCase =(dependencies: any)=>{
     if(userExist){
         return { status: false, message: "User Already Exist"}
     }
+    else{
     const response = await sendOtp(data?.email);
     if(response?.status){
         const { otp } = response;
@@ -22,6 +23,7 @@ export const addUser_useCase =(dependencies: any)=>{
     }else{
         return {status: false,message:'invalid otp'}
     }
+}
         } catch(error){
             console.error('Error creating user:',error)
             return {status: false,message:'An error occured'}

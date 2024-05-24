@@ -11,7 +11,9 @@ try{
     const response = await User.findOne({
         "basicInformation.email": email,
     });
-    return !!response;
+    if(response){
+    return {status:true,message:"email exists"};
+    }
 }
 catch(error){
     console.log("Error in userEmailExist", error);

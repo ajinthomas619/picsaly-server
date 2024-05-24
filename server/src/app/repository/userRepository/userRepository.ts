@@ -341,7 +341,7 @@ export default {
       console.log("data for saving post", data);
 
       const { userId, postId } = data;
-      console.log("user idd", data.userId);
+     
 
       const user: any = await User.findById(data.userId);
       if (user) {
