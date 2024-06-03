@@ -6,9 +6,9 @@ export const replyToComment_useCase = (dependencies:any) => {
         repository:{postRepository},
     } = dependencies
 
-    const executeFunction = async(postId:string,commentData:CommentObject) => {
+    const executeFunction = async(commentId:string,commentData:any,postId:String) => {
         try {
-            const response = await postRepository.replyToComment(postId,commentData)
+            const response = await postRepository.replyToComment(commentId,commentData,postId)
             if(response.status){
                 return{status:true,message:response.message}
             }
@@ -19,6 +19,6 @@ export const replyToComment_useCase = (dependencies:any) => {
         } catch (error) {
             console.log("error in replyToCOmment Usecase",error)
         }
-        return {executeFunction}
     }
+    return {executeFunction}
 }

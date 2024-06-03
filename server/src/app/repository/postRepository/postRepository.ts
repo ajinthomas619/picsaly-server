@@ -180,7 +180,7 @@ export default {
   },
   getPost: async (id: string) => {
     try {
-      const response = await Post.findById(id);
+      const response = await Post.findById(id).populate('comments.userId');
 
       if (!response) {
         return { status: false, message: "no such post found" };
@@ -194,16 +194,19 @@ export default {
       console.log("error in fetching post", error);
     }
   },
-  replyToComment: async (postId: string, commentData: CommentObject) => {
+  replyToComment: async (commentId:string, commentData: CommentObject,postId:String) => {
     try {
+      
       const post = await Post.findById(postId);
-      const commentId = commentData?.commentId;
+      console.log("the post ",post)
+      
       if (!post) {
         return { status: false, message: "Post not found" };
       }
       const comment = post?.comments.find(
         (comment: any) => comment?._id?.toString() === commentId
       );
+      console.log("the comment",comment)
       if (!comment) {
         return { status: false, message: "Comment not found" };
       }
@@ -223,12 +226,11 @@ export default {
   },
   editComment: async (postId: string, commentData: string,commentId:string) => {
     try {
-      console.log("hi daaa")
-      console.log("th epost id",postId)
+     
       const post = await Post.findById(postId);
-      console.log("the post",post)
+   
       const commentObjectId = new Types.ObjectId(commentId)
-      console.log("the comment objectid",commentObjectId)
+      
       if (!post) {
         return { status: false, message: "Post not found" };
       }

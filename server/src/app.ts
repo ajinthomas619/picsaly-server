@@ -7,6 +7,9 @@ import session, {MemoryStore,SessionOptions,SessionData} from 'express-session';
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db'
+import { Server } from 'socket.io';
+import socketConfig from './utils/socket/socket';
+import http from 'http'
 
 dotenv.config()
 
@@ -55,6 +58,13 @@ app.use(
      store:store,
   }as SessionOptions)
 )
+const server = http.createServer(app);
+export const io:Server = require('socket.io')(3001,{
+  cors:{origin:'http://localhost:5173'}
+})
+socketConfig()
+
+
 
 app.use(express.urlencoded({extended:true}));
 app.use("/api",router(dependencies));

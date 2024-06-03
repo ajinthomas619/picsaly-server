@@ -9,8 +9,14 @@ const start = async() => {
         await connectDB()
         console.log('connected to database')
 
-        app.listen(3000,()=>{
-            console.log('server started')
+        await new Promise((resolve:any, reject) => {
+            app.listen(3000, () => {
+                console.log('Server started');
+                resolve();
+            }).on('error', (err) => {
+                console.error(err);
+                reject(err);
+            });
         })
     }
         catch(error){

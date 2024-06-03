@@ -30,6 +30,11 @@ import { getLikedPosts_useCase } from '../useCases/Post_Usecases/postUsecase'
 import { followUser_Usecase } from '../useCases/User_Usecases'
 import { getSuggestedUser_useCase } from '../useCases/User_Usecases'
 import { getSearchUserUsecase } from '../useCases/User_Usecases'
+import { sendMessageUsecase } from '../useCases/Chat_Usecases'
+import { getConversationsUsecase } from '../useCases/Chat_Usecases'
+import { getMessagesUsecase } from '../useCases/Chat_Usecases'
+import { chatRepository } from '../app/repository/chatRepository'
+import { Conversation_Usecase } from '../useCases/Chat_Usecases'
 
 
 
@@ -63,9 +68,11 @@ getCreatedPost_useCase,
 getLikedPosts_useCase,
 followUser_Usecase,
 getSuggestedUser_useCase,
-getSearchUserUsecase
-
-
+getSearchUserUsecase,
+sendMessageUsecase,
+getConversationsUsecase,
+getMessagesUsecase,
+Conversation_Usecase
 
 }
 
@@ -73,7 +80,8 @@ getSearchUserUsecase
 const repository:any ={
     authRepository,
     userRepository,
-    postRepository
+    postRepository,
+    chatRepository
 }
 
 export default {repository,useCase}

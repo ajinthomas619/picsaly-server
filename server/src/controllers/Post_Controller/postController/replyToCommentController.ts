@@ -6,10 +6,14 @@ export default(dependencies:any) =>{
         useCase:{replyToComment_useCase}
     } = dependencies
     const replyToCommentController = async(req:Request,res:Response) => {
-        const postId= req.params.postId
-        const commentData = {...req.body}
+        const commentId= req.params.commentId
+        const commentData = req.body
+        const postId = req.body.postId
+        console.log("the post id",commentId)
+        console.log("the comment data",commentData)
+        console.log("body",req.body)
         try{
-            const response = await replyToComment_useCase(dependencies).executeFunction(postId,commentData)
+            const response = await replyToComment_useCase(dependencies).executeFunction(commentId,commentData,postId)
             if(response.status){
                 res.status(200).json({
                     status:true,
