@@ -14,7 +14,10 @@ import { editComment_useCase } from "./editCommentUsecase"
 import { likeComment_useCase } from "./likeCommentUsecase"
 import { searchPost_useCase } from "./searchPostUsecase"
 import { getLikedPosts_useCase } from "./getLikedpostsUsecase"
-
+import { getMonthlyPostCountUsecase } from "./getMonthlyPostCountUsecase"
+import { reportPostUsecase } from "./reportPostUsecase"
+import { updatePostStatusUsecase } from "./updatePostStatusUsecase"
+import { showAllPostForAdminUsecase } from "./showAllPostForAdminUsecase"
 
 export{
     AddPost_Usecase,
@@ -31,6 +34,10 @@ export{
     editComment_useCase,
     likeComment_useCase,
     searchPost_useCase,
-    getLikedPosts_useCase
+    getLikedPosts_useCase,
+    getMonthlyPostCountUsecase,
+    reportPostUsecase,
+    updatePostStatusUsecase,
+    showAllPostForAdminUsecase
  
 }

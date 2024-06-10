@@ -50,7 +50,8 @@ catch(error){
 
     findUser:async(email:string) =>{
         try{
-            const user = await User.findOne({email:email})
+            const user = await User.find({email:email,'basicInformation.isBlocked':false})
+            console.log("the user detaols",user)
             if(user){
                 
                     return{status:true,user:user}

@@ -7,7 +7,7 @@ export default (dependencies:any) => {
         
             console.log("entered to block user controller");
             const userId = req.body.userid
-            const blockeduserid = req.body
+            const blockeduserid = req.body.userId
             
             const response = await BlockUser_Usecase(dependencies).executeFunction(userId,blockeduserid); 
             if(response.status){

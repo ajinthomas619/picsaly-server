@@ -12,6 +12,10 @@ import  {UnblockUser_Usecase} from "./unblockUserUsecase"
 import { getCreatedPost_useCase } from "./getCreatedPostUsecase";
 import { getSuggestedUser_useCase } from "./getSuggestedUsersUsecase";
 import { getSearchUserUsecase } from "./getSearchUserUsecase";
+import { getMonthlyUserCountUsecase } from "./getMonthlyUserCountUsecase";
+import { changeUserStatusUsecase } from "./changeUserStatusUsecase";
+import  { getFollowersUsecase } from "./getFollowersUsecase";
+import { getFollowingUsecase } from "./getFollowingUsecase";
 
 export {
     addProfileImageUsecase,
@@ -27,5 +31,9 @@ export {
     UnblockUser_Usecase,
     getCreatedPost_useCase,
     getSuggestedUser_useCase,
-    getSearchUserUsecase
+    getSearchUserUsecase,
+    getMonthlyUserCountUsecase,
+    changeUserStatusUsecase,
+    getFollowersUsecase,
+    getFollowingUsecase
 }

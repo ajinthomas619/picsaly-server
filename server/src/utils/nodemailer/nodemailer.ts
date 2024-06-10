@@ -22,7 +22,9 @@ const info =  await transporter.sendMail({
     to: email,
     subject: "Verify your Account",
     text: `Your otp is ${otp}`,
-    html: `<b> <button> Verify </button></b>`,
+    html: `<b>  <p>Your otp is ${otp} </p> 
+    <br/> <br/>
+    <button> Verify </button></b>`,
 });
 if(info){
     return {status:true,otp:otp}

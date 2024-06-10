@@ -34,3 +34,7 @@ export interface CommentObject {
     editedComment:string;
 
 }
+export interface reportObject {
+    userId:string;
+    reason:string;
+}

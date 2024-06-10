@@ -13,6 +13,10 @@ import searchPostController from "./searchPostController";
 import replyToCommentController from "./replyToCommentController"
 import likeCommentController from "./likeCommentController"
 import getLikedPostController from "./getLikedPostController";
+import getMonthlyPostCountController from "./getMonthlyPostCountController";
+import reportPostController from "./reportPostController";
+import updatePostStatusController from "./updatePostStatusController";
+import showAllPostForAdminController from "./showAllPostForAdminController";
 export default (dependencies: any) => {
     return{
         showAllPostController:showAllPostController(dependencies),
@@ -29,7 +33,11 @@ export default (dependencies: any) => {
         searchPostController:searchPostController(dependencies),
         replyToCommentController:replyToCommentController(dependencies),
         likeCommentController:likeCommentController(dependencies),
-        getLikedPostController:getLikedPostController(dependencies)
+        getLikedPostController:getLikedPostController(dependencies),
+        getMonthlyPostCountController:getMonthlyPostCountController(dependencies),
+        reportPostController:reportPostController(dependencies),
+        updatePostStatusController:updatePostStatusController(dependencies),
+        showAllPostForAdminController:showAllPostForAdminController(dependencies)
 
     }
 }

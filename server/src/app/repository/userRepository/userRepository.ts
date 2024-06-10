@@ -35,9 +35,9 @@ export default {
       console.log("error in creating user", error);
     }
   },
-  findUser: async (email: string) => {
+  findUser: async (email: string,) => {
     try {
-      const finduser = await User.findOne({ "basicInformation.email": email });
+      const finduser = await User.findOne({ "basicInformation.email": email,"basicInformation.isBlocked":false });
 
       if (finduser) {
         return { status: true, finduser };
@@ -51,7 +51,7 @@ export default {
   getAllUsers: async () => {
     try {
       let userData: any[] = [];
-      const users = await User.find();
+      const users = await User.find({'basicInformation.isBlocked':false});
       console.log("all users", users);
       Promise.all(
         users.map(async (data: any) => {
@@ -312,15 +312,16 @@ export default {
       user?.socialConnections?.blockedUsers.push(userToBlockId);
       await user.save();
 
-      return "user blocked successfully";
+      return {status:true,message:"user blocked successfully"};
     } catch (error) {
       console.log("error in blocking user", error);
+      return {status:false,message:"error in server"}
     }
   },
   unblockUser: async (userId: any, userToUnblockId: any) => {
     try {
       const user = await User.findById(userId);
-      if (!user) {
+      if (!user) {  0
         throw new Error("User not found");
       }
       const index =
@@ -331,9 +332,10 @@ export default {
       user.socialConnections?.blockedUsers.splice(index, 1);
       await user.save();
 
-      return "User unblocked successfully";
+      return {status:true,message:"user ublocked successfully"};
     } catch (error) {
       console.log("error in unblocking user", error);
+      return{status:false,message:"error in server"}
     }
   },
   savePost: async (data: any) => {
@@ -400,7 +402,8 @@ export default {
             const following = user.socialConnections?.Following || []
 
             const suggestedUsers = await User.find({
-                _id:{$nin:[...following,userId]}
+                _id:{$nin:[...following,userId]},
+                'basicInformation.isBlocked':false
             })
             return {status:true,message:"suggeste users",data:suggestedUsers}
         }
@@ -412,6 +415,102 @@ export default {
         console.log("error in getting suggested users",error)
         return {status:false,message:"internal server error"}
         
+    }
+  },
+  getMonthlyUsersCount:async() => {
+    try {
+      const usersPerMonth = await User.aggregate([
+        {
+          $group:{
+            _id:{$month:"$basicInformation.createdAt"},
+            count:{$sum:1}
+          }
+        },
+        {
+          $sort:{_id:1},
+        }
+      ])
+
+      const resultArray = usersPerMonth.map((item) => ({
+        x:item._id,
+        y:item.count,
+      }))
+      if(usersPerMonth){
+        return{
+          status:true,
+          message:"count successfull",
+          usersPerMonth:resultArray
+        }
+      }
+    } catch (error) {
+      console.log("error in getting monthly users count",error)
+      return{status:false,message:"count successfull   "}
+    }
+  },
+  changeUserStatus:async(userId:string) => {
+    try{
+      const user = await User.findById(userId)
+      if(!user){
+        console.log("user not found")
+        return
+      }
+      if (!user.basicInformation) {
+        console.log("User's basic information is missing");
+        return { status: false, message: "User's basic information is missing" };
+    }
+
+      user.basicInformation.isBlocked = !user.basicInformation.isBlocked
+      await user.save()
+      if(user){
+        return{status:true,message:"user status changed"}
+      }
+      else{
+        return{status:false,message:"error in cahnging user status"}
+      }
+
+    }
+    catch(error){
+      console.log("error in cahnging user status",error)
+      return{status:false,message:"internal server error"}
+    }
+  },
+  getFollowers:async(userId:string) => {
+    try{
+    const user = await User.findOne({_id:userId})
+if(user){
+    const followers = user?.socialConnections?.Followers || []
+    const data = await User.find({
+      _id:{$in:[...followers]}
+    })
+    console.log("the foolowers",data)
+    return {status:true,message:"the followers",data:data}
+}
+else{
+  return{status:false,message:"followers not found"}
+}
+    }
+    catch(error){
+      console.log("error in getting followers",error)
+      return{status:false,message:"internal server error"}
+    }
+  },
+  getFollowing:async(userId:string) => {
+    try {
+      const user = await User.findOne({_id:userId})
+      if(user){
+        const following = user.socialConnections?.Following||[]
+        const data = await User.find({
+          _id:{$in:[...following]}
+        })
+        console.log("th data",data)
+        return {status:true,message:"the following",data:data}
+      }
+      else{
+        return{status:false,message:"followings not found"}
+      }
+    } catch (error) {
+      console.log("error in getting followings",error)
+      return{status:false,message:"internal server error"}
     }
   }
 };

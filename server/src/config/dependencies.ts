@@ -35,9 +35,16 @@ import { getConversationsUsecase } from '../useCases/Chat_Usecases'
 import { getMessagesUsecase } from '../useCases/Chat_Usecases'
 import { chatRepository } from '../app/repository/chatRepository'
 import { Conversation_Usecase } from '../useCases/Chat_Usecases'
-
-
-
+import { getMonthlyPostCountUsecase } from '../useCases/Post_Usecases/postUsecase'
+import { getMonthlyUserCountUsecase } from '../useCases/User_Usecases'
+import { reportPostUsecase } from '../useCases/Post_Usecases/postUsecase'
+import { BlockUser_Usecase } from '../useCases/User_Usecases'
+import { UnblockUser_Usecase } from '../useCases/User_Usecases'
+import { changeUserStatusUsecase } from '../useCases/User_Usecases'
+import { updatePostStatusUsecase } from '../useCases/Post_Usecases/postUsecase'
+import { showAllPostForAdminUsecase } from '../useCases/Post_Usecases/postUsecase'
+import { getFollowersUsecase } from '../useCases/User_Usecases'
+import { getFollowingUsecase } from '../useCases/User_Usecases'
 
 const useCase : any ={
 addUser_useCase,
@@ -72,7 +79,17 @@ getSearchUserUsecase,
 sendMessageUsecase,
 getConversationsUsecase,
 getMessagesUsecase,
-Conversation_Usecase
+Conversation_Usecase,
+getMonthlyPostCountUsecase,
+getMonthlyUserCountUsecase,
+reportPostUsecase,
+BlockUser_Usecase,
+UnblockUser_Usecase,
+changeUserStatusUsecase,
+updatePostStatusUsecase,
+showAllPostForAdminUsecase,
+getFollowersUsecase,
+getFollowingUsecase
 
 }
 

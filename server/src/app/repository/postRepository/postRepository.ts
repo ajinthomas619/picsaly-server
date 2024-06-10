@@ -2,6 +2,7 @@ import {
   PostData,
   Userdata,
   CommentObject,
+  reportObject
 } from "../../../utils/interface/interface";
 import { User } from "../../database/userModel";
 import { Post } from "../../database/postModel";
@@ -384,4 +385,87 @@ export default {
       return { status: false, message: "posts not found " };
     }
   },
+  getMonthlyPostCount: async () => {
+    try {
+      const postsPerMonth = await Post.aggregate([
+        {
+          $group:{
+            _id:{$month:"$createdAt"},
+            count:{$sum:1}
+          },
+        },{
+          $sort:{_id:1},
+        }
+      ])
+
+      const resultArray = postsPerMonth.map((item) =>( {
+        x:item._id,
+        y:item.count,
+      }))
+      if(postsPerMonth){
+        return{
+          status:true,
+          message:"count successfull",
+          postsPerMonth:resultArray
+        }
+      }
+    } catch (error) {
+      console.log("error in getting monthlyPostCount  repo",error)
+      return {status:false,message:"count unsuccessfull"}
+      
+    }
+  },
+  reportPost:async(postId:string,userId:String,reportObject:reportObject) =>{
+    try {
+      console.log("the userID",userId)
+    const post = await Post.findById(postId)
+      const response = post?.reportedUsersList.push(userId)
+      await post?.save()
+      console.log("the response",response)
+      if(response){
+        return {status:true,message:"reported successfully"}
+      }
+      else{
+        return {status:false,message:"report unsuccessfull"}
+      }
+    } catch (error) {
+      console.log("error in reporting post",error)
+      return {status:false,message:"report unsuccessfull"}
+    }
+  },
+  updatePostStatus:async(postId:string) =>{
+    try {
+      const post = await Post.findById(postId)
+      if(!post){
+        console.log("post not found")
+        return
+      }
+    
+      post.Visibility = !post.Visibility
+      await post.save()
+
+      if(post){
+        return{status:true,message:"post status changed",post:post}
+      }
+      else{
+        return{status:false,message:"something error occured"}
+      }
+    } catch (error) {
+      console.log("error in updating post status",error)
+      return {status:false,message:"internal server error"}
+    }
+  },
+  showAllPostForAdmin:async() => {
+    try {
+      const response = await Post.find({}).populate("createdBy")
+      if(response) {
+        return {status:true,data:response}
+      }
+      else{
+        return{status:false,message:"nothing found"}
+      }
+    } catch (error) {
+      console.log("error in finding post for admin",error)
+    }
+  }
 };

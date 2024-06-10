@@ -77,7 +77,7 @@ const postSchema = new mongoose.Schema({
         ref:'User'
     },
     reportedUsersList:{
-        typr:Array,
+        type:Array,
     },
     Visibility:{
         type:Boolean,

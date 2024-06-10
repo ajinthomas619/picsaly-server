@@ -12,6 +12,10 @@ import unblockUserController from "./unblockUserController";
 import savePostController from "./savePostController";
 import getCreatedPostController from "./getCreatedPostController";
 import getSuggestedUserController from "./getSuggestedUserController";
+import getMonthlyUserCountController from "./getMonthlyUserCountController";
+import changeUserStatusController from "./changeUserStatusController";
+import getFollowersController from "./getFollowersController";
+import getFollowingController from "./getFollowingController";
 export default(dependencies:any) => {
 return {
     addProfileController:addProfileController(dependencies),
@@ -27,6 +31,10 @@ return {
     unblockUserController:unblockUserController(dependencies), 
     savePostController:savePostController(dependencies),
     getCreatedPostController:getCreatedPostController(dependencies),
-    getSuggestedUserController:getSuggestedUserController(dependencies)
+    getSuggestedUserController:getSuggestedUserController(dependencies),
+    getMonthlyUserCountController:getMonthlyUserCountController(dependencies),
+    changeUserStatusController:changeUserStatusController(dependencies),
+    getFollowersController:getFollowersController(dependencies),
+    getFollowingController:getFollowingController(dependencies)
 }
 }

@@ -6,6 +6,8 @@ import { chatController } from '../controllers/Chat_Controller'
 import authMiddleware from '../middlewares/authMiddleware'
 import {upload} from '../utils/multer/multer'
 import axios from 'axios'
+import getFollowersController from '../controllers/User_Controller/userController/getFollowersController'
+
 export default (dependencies:any) => {
     const router = express.Router()
 const {
@@ -32,7 +34,11 @@ const {
     addProfileImageController,
     savePostController,
     getCreatedPostController,
-    getSuggestedUserController
+    getSuggestedUserController,
+    getMonthlyUserCountController,
+    changeUserStatusController,
+    getFollowersController,
+    getFollowingController
 
 
 } = userController(dependencies)
@@ -52,7 +58,11 @@ const {
     getSavedPostController,
     replyToCommentController,
     searchPostController,
-    getLikedPostController
+    getLikedPostController,
+    getMonthlyPostCountController,
+    reportPostController,
+    updatePostStatusController,
+    showAllPostForAdminController
      
      
      
@@ -81,7 +91,7 @@ router.get('/refresh',refreshTokenController)
 // User Routes
 
 router.post('/getUserData',getUserDataController)
-router.get('/getAllUsers/:id',getAllUsersController)
+router.get('/getAllUsers',getAllUsersController)
 router.get('/getSearchUser/:user',getSearchUserController)
 router.post('/addProfile',addProfileController)
 router.post('/editProfile/:id',editProfileController)
@@ -90,9 +100,11 @@ router.post('/getUsersByName',getUsersByNameController)
 router.get('/getUserById/:id',getUserByIdController)
 router.post('/followUser',followUserController )
 router.post('/savepost',savePostController)
-router.post('blockuser',blockUserController)
-router.post('/unlockuser',unblockUserController)
+router.post('/blockuser',blockUserController)
+router.post('/unblockuser',unblockUserController)
 router.get('/getCreatedPost/:id',getCreatedPostController)
+router.get('/getMonthlyUsers',getMonthlyUserCountController)
+router.post('/changeuserstatus',changeUserStatusController)
 
 
 // Post routes
@@ -112,6 +124,12 @@ router.post('/get-saved-post/:userId',getSavedPostController)
 router.post('/reply-to-comment/:commentId',replyToCommentController)
 router.get('/getLikedPosts/:id',getLikedPostController)
 router.get('/getSuggestedUsers/:id',getSuggestedUserController)
+router.get('/getMonthlyPost',getMonthlyPostCountController)
+router.post('/report-post/:postId',reportPostController)
+router.post('/updatepoststatus',updatePostStatusController),
+router.get('/showall',showAllPostForAdminController),
+router.get('/getFollowers/:id',getFollowersController)
+router.get('/getFollowing/:id',getFollowingController)
 
 
 
