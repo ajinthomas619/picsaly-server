@@ -18,7 +18,7 @@ const likePostController = async(req:Request,res:Response)=>{
   
         
         if(response.status){
-            res.status(200).json({status:true,message:"liked",likes:response?.likes})
+            res.status(200).json({status:true,message:response.message,likes:response?.likes})
         }
         else{
             res.status(500).json({status:false,message:"like unsuccessfull",likes:response?.likes})

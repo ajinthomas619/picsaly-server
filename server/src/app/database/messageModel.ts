@@ -14,12 +14,15 @@ const messageSchema = new Schema({
     },
     message: {
         type: String,
-        required: true, 
+         
     },
     imgURL: {
         type: String,
        
     },
+    messageType:{
+        type:String
+    }
 }, {
     timestamps: true, 
 });

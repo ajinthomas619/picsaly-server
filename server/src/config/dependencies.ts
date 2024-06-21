@@ -45,7 +45,21 @@ import { updatePostStatusUsecase } from '../useCases/Post_Usecases/postUsecase'
 import { showAllPostForAdminUsecase } from '../useCases/Post_Usecases/postUsecase'
 import { getFollowersUsecase } from '../useCases/User_Usecases'
 import { getFollowingUsecase } from '../useCases/User_Usecases'
-
+import { singleUserFileSendUsecase } from '../useCases/User_Usecases'
+import { notificationRepository } from '../app/repository/notificationRepository'
+import { sendGroupMessageUsecase } from '../useCases/Chat_Usecases'
+import { getGroupDataByIdUsecase } from '../useCases/Chat_Usecases'
+import { getGroupMessagesusecase } from '../useCases/Chat_Usecases'
+import { getAllGroupsOfUserUsecase } from '../useCases/Chat_Usecases'
+import { createNewGroupUsecase } from '../useCases/Chat_Usecases'
+import { deleteMessageUsecase } from '../useCases/Chat_Usecases'
+import { likeNotificationUsecase } from '../useCases/Notiification_Usecase'
+import { commentNotificationUsecase } from '../useCases/Notiification_Usecase'
+import { followNotificationUsecase } from '../useCases/Notiification_Usecase'
+import { callNotificationUsecase } from '../useCases/Notiification_Usecase'
+import { messageNotificationUsecase } from '../useCases/Notiification_Usecase'
+import { getNotificationOfUserUsecase } from '../useCases/Notiification_Usecase'
+import { videoCallUsecase } from '../useCases/Chat_Usecases'
 const useCase : any ={
 addUser_useCase,
 userLogin_useCase,
@@ -89,7 +103,22 @@ changeUserStatusUsecase,
 updatePostStatusUsecase,
 showAllPostForAdminUsecase,
 getFollowersUsecase,
-getFollowingUsecase
+getFollowingUsecase,
+singleUserFileSendUsecase,
+deleteMessageUsecase,
+sendGroupMessageUsecase,
+createNewGroupUsecase,
+getAllGroupsOfUserUsecase,
+getGroupDataByIdUsecase,
+getGroupMessagesusecase,
+likeNotificationUsecase,
+commentNotificationUsecase,
+followNotificationUsecase,
+callNotificationUsecase,
+messageNotificationUsecase,
+getNotificationOfUserUsecase,
+videoCallUsecase
+
 
 }
 
@@ -98,7 +127,8 @@ const repository:any ={
     authRepository,
     userRepository,
     postRepository,
-    chatRepository
+    chatRepository,
+    notificationRepository
 }
 
 export default {repository,useCase}

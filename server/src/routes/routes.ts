@@ -3,10 +3,11 @@ import { authController } from '../controllers/Auth_Controler'
 import {userController} from '../controllers/User_Controller'
 import {postController} from '../controllers/Post_Controller'
 import { chatController } from '../controllers/Chat_Controller'
+import { notificationController } from '../controllers/Notification_Controller'
 import authMiddleware from '../middlewares/authMiddleware'
 import {upload} from '../utils/multer/multer'
+import { uploadChat } from '../utils/multer/multerChat'
 import axios from 'axios'
-import getFollowersController from '../controllers/User_Controller/userController/getFollowersController'
 
 export default (dependencies:any) => {
     const router = express.Router()
@@ -74,8 +75,23 @@ const{
     getMessageController,
     getConversationController,
     sendMessageController,
-    conversationController
+    conversationController,
+    deleteMessageController,
+    getAllGroupOfusersController,
+    getGroupDataByIdController,
+    sendGroupMessageController,
+    groupSendFileController,
+    createNewGroupController,
+    singleUserSendFileController,
+    getGroupMessagesController,
+   sendVoiceMessageController,
+   videoCallController
 } = chatController(dependencies)
+
+const{
+getNotificationOfAllUsersController,
+sendNotificationController
+} = notificationController(dependencies)
  
 
  //Auth Routes
@@ -140,9 +156,19 @@ router.post("/get-messages/:userId",getMessageController)
 router.post("/send/:userId",sendMessageController)
 router.post("/get-conversations/:userId",getConversationController)
 router.post('/conversation',conversationController)
+router.delete('/deleteMessage/:id',deleteMessageController)
+router.post('/createNewGroup',createNewGroupController)
+router.post('/sendGroupMessage',sendGroupMessageController)
+router.get('/getNotificationOfUser/:userId',getNotificationOfAllUsersController)
+router.post('/sendVoiceMessage',uploadChat.single('audio'),singleUserSendFileController)
+router.post('/groupVoiceMessage',uploadChat.single('audio'),sendVoiceMessageController)
+router.post('/sendFile/:userId',uploadChat.single('file'),singleUserSendFileController)
+router.get('/getAllGroupOfUsers',getAllGroupOfusersController)
+router.get('/getSingleGroupMessage',getGroupMessagesController)
+router.get('/getGroupDataById',getGroupDataByIdController)
+router.post("/videocall/:receiverId",videoCallController)
 
-
-
+router.post('/notification',sendNotificationController)
 return router
 
 }

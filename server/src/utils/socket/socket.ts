@@ -5,6 +5,8 @@ const userSocketMap: Record<string, string> = {};
 
 export const getRecieverSocketId = (recieverId: string): string | undefined => {
   console.log("socket reciberrer",recieverId)
+  console.log("userrrr",userSocketMap)
+  console.log("the user socket map",userSocketMap[recieverId])
   return userSocketMap[recieverId];
 };
 
@@ -15,6 +17,7 @@ const socketConfig = () => {
     console.log("enterd to socket config")
     io.on("connection", (socket: Socket) => {
       console.log("a user connected", socket.id);
+      console.log("Sdfdsf",socket.handshake.query)
   
       const userId: string | undefined = socket.handshake.query.userId as string;
       if (userId && userId !== "undefined") {

@@ -11,6 +11,7 @@ export const likePost_useCase = (dependencies:any) => {
         try{
 
             const response = await postRepository.likePost(postId,userId,liked)
+            console.log("the response of like post isssssss",response.status)
     
             if(response.status){
                 return{

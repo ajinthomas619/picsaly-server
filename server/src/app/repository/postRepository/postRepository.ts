@@ -94,6 +94,7 @@ export default {
     try {
       let updateQuery;
       let message;
+      let operationStatus
 
       const postObjectId = new Types.ObjectId(postId);
 
@@ -107,7 +108,7 @@ export default {
         (like) => like.userId?.toString() === userId
       );
       if (liked && userLiked) {
-        return { status: true, message: "User already liked this post" };
+        return { status: false, message: "User already liked this post" };
       }
 
       if (liked) {
@@ -115,6 +116,7 @@ export default {
           $push: { Likes: { userId: userId, likescount: 1 } },
         };
         message = "liked";
+        operationStatus = true
       } else {
         updateQuery = {
           $pull: { Likes: { userId: userId } },

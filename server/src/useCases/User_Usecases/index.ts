@@ -16,6 +16,7 @@ import { getMonthlyUserCountUsecase } from "./getMonthlyUserCountUsecase";
 import { changeUserStatusUsecase } from "./changeUserStatusUsecase";
 import  { getFollowersUsecase } from "./getFollowersUsecase";
 import { getFollowingUsecase } from "./getFollowingUsecase";
+import { singleUserFileSendUsecase } from "../Chat_Usecases/singleUserFileSendUsecase";
 
 export {
     addProfileImageUsecase,
@@ -35,5 +36,6 @@ export {
     getMonthlyUserCountUsecase,
     changeUserStatusUsecase,
     getFollowersUsecase,
-    getFollowingUsecase
+    getFollowingUsecase,
+    singleUserFileSendUsecase
 }

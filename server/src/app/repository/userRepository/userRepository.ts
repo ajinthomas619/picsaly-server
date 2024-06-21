@@ -261,6 +261,8 @@ export default {
         { new: true }
       );
 
+    
+
       if (updatedUser && updatedFollowedUser) {
         return { status: true, message: "Unfollowed successfully" };
       } else {
