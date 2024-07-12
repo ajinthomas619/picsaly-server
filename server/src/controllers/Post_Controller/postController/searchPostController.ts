@@ -9,7 +9,7 @@ export default (dependencies:any) => {
     const searchPostController = async(req:Request,res:Response) => {
         try{
             const {regex} = req.params
-            console.log("the posatr trtre",regex)
+           
             const response = await searchPost_useCase(dependencies).executeFunction(regex)
             if(response.status){
                 res.status(200).json({status:true,message:response.message,posts:response.posts})

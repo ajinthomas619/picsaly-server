@@ -7,10 +7,10 @@ export default (dependencies:any) => {
 
     const getNotificatioOfUserController = async(req:Request,res:Response) => {
       try {
-        console.log("th query",req.params)
+        
         const {userId} = req.params
         const response = await getNotificationOfUserUsecase(dependencies).executeFunction(userId)
-        console.log("get notification ",response)
+       
         if(response.status){
             res.json({status:response.status,data:response})
         }

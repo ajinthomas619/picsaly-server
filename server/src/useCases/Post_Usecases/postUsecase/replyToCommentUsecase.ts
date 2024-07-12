@@ -10,7 +10,7 @@ export const replyToComment_useCase = (dependencies:any) => {
         try {
             const response = await postRepository.replyToComment(commentId,commentData,postId)
             if(response.status){
-                return{status:true,message:response.message}
+                return{status:true,message:response.message,reply:response.replies}
             }
             else{
                 return{status:false,message:response.message}

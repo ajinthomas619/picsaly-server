@@ -10,8 +10,7 @@ export default(dependencies:any) => {
             const postId = req.params.postId
             const commentData = req.body.comment
             const commentId = req.body.commentid
-            console.log("the params",req.params)
-            console.log("the body",req.body)
+          
 
             const response = await editComment_useCase(dependencies).executeFunction(
                 postId,

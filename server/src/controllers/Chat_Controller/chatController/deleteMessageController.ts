@@ -6,6 +6,7 @@ export default (dependencies:any) => {
     const deleteMessageController = async(req:Request,res:Response) => {
         try {
             const {id} = req.params
+           
             const response = await deleteMessageUsecase(dependencies).executeFunction(id)
             if(response.status){
                 res.json({status:response.status,message:response.message})

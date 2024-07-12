@@ -3,8 +3,9 @@ import { Request,Response } from "express";
 export default (dependencies:any) => {
     const showAllPostController = async(req:Request,res:Response) => {
         const { useCase: { showAllPostUsecase } } = dependencies;
-
-        const response = await showAllPostUsecase(dependencies).executeFunction()
+            const userId = req.params.id
+          
+        const response = await showAllPostUsecase(dependencies).executeFunction(userId)
        
         if(response.status){
             res.status(200).json({status:true,data:response.data});

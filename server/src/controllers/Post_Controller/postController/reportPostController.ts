@@ -11,16 +11,14 @@ export default (dependencies:any) => {
             const reportObject = req.body.reason
             const userId = req.body.userId
             const {postId} = req.params
-            console.log("the body for reporting post",req.body)
-            console.log("the userrrrrt",userId)
-            console.log("the report object",reportObject)
+          
 
             const response = await reportPostUsecase(dependencies).executeFunction(
                 postId,
                 userId,
                 reportObject,
             )
-            console.log("the response forf report",response)
+           
             if(response.status){
                 res.status(200).json({status:true,message:response.message})
             }

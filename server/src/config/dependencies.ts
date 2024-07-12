@@ -60,6 +60,9 @@ import { callNotificationUsecase } from '../useCases/Notiification_Usecase'
 import { messageNotificationUsecase } from '../useCases/Notiification_Usecase'
 import { getNotificationOfUserUsecase } from '../useCases/Notiification_Usecase'
 import { videoCallUsecase } from '../useCases/Chat_Usecases'
+import { clearNotificationUsecase } from '../useCases/Notiification_Usecase'
+import { deletePost_useCase } from '../useCases/Post_Usecases/postUsecase'
+import { showPostForHomeUsecase } from '../useCases/Post_Usecases/postUsecase'
 const useCase : any ={
 addUser_useCase,
 userLogin_useCase,
@@ -69,6 +72,7 @@ adminAuth_UseCase,
 refreshTokeUsecase,
 showAllPostUsecase,
 AddPost_Usecase ,
+deletePost_useCase,
 getPost_useCase,
 getUserByIdUse_Case,
 likePost_useCase,
@@ -117,7 +121,9 @@ followNotificationUsecase,
 callNotificationUsecase,
 messageNotificationUsecase,
 getNotificationOfUserUsecase,
-videoCallUsecase
+videoCallUsecase,
+clearNotificationUsecase,
+showPostForHomeUsecase
 
 
 }

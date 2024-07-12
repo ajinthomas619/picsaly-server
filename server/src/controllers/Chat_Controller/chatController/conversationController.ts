@@ -6,7 +6,7 @@ export default (dependencies:any) => {
     } = dependencies
 
     const ConversationController = async(req:Request,res:Response) => {
-        console.log("i am the conversation")
+       
 
         const {senderId,receiverId} = req.body
         const response = await Conversation_Usecase(dependencies).executeFunction(senderId,receiverId)

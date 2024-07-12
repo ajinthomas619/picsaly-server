@@ -8,17 +8,17 @@ export default (dependencies: any) => {
 
 const addProfileController = async(req:Request,res:Response)=>{
 try{
-    console.log("AddProfileController")
+  
     const{accessToken} = req.cookies
     let userData:any = await decodeAccessToken(accessToken)
-    console.log("userData:=",userData)
+    
 
 if(userData.status){
     const userId = userData?.data?.user?._id || userData?.data?.user?.response._id
     const response = await addProfileUsecase(dependencies).executeFunction(req.body,userId)
-    console.log("response from controller",response)
+   
     if(response){
-        console.log("response userrr",response.user)
+      
         const data={
             dateOfBirth:response.user.basicInformation.dateOfBirth,
             gender:response.user.basicInformation.gender,

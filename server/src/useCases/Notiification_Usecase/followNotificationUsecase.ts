@@ -4,9 +4,9 @@ export const followNotificationUsecase = (dependencies:any) => {
 
     const executeFunction = async(message:any,data:any) => {
         try {
-            console.log("dataa for use case",data)
+            
             const response =await notificationRepository.followNotification(message,data)
-            console.log("the response of follow user notification is",response)
+           
             if(response.status){
                 return{status:response.status,data:response.data}
             }

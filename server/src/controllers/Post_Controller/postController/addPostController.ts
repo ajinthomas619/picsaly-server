@@ -11,15 +11,12 @@ export default (dependencies: any) => {
     
     const addPostController = async (req: Request, res: Response) => {
         try {
-            console.log('entered to add post controller');
+            
         
             
             const { body, files } = req;
           
-            console.log(req?.files,"FILESSS");
-            
-            console.log(req.body, "its a request");
-            console.log("files", files);
+          
 
             if (!files || !Array.isArray(files)) {
                 return res.status(400).json({ error: "No files uploaded" });
@@ -27,16 +24,16 @@ export default (dependencies: any) => {
            
             const uploadedFiles = Array.isArray(files) ? files : [files];
             const images: any[] = uploadedFiles.map((file: MulterFile) => file.filename);
-            console.log("images", images);
+           
             
             const data = {
                 image: images,
                 data: body,
             };
-            console.log("imggfggg", data);
+           
             
             const response = await AddPost_Usecase(dependencies).executeFunction(data);
-            console.log('responseee', response);
+            
            
 
             if (response.status) {

@@ -10,13 +10,13 @@ export default (dependencies:any) => {
     const editPostController = async(req:Request,res:Response) => {
     
     try{
-            console.log("edit post controller stage 2");
+           
             const id = req.params.id;
             const data = req.body;
-              console.log("body edit",data);
+             
               
             const response = await editPost_useCase(dependencies).executeFunction(id,data)
-            console.log("response of edit post controllerr",response);
+           
             
             if(response.status){
                 res.status(200).json({statusP:true,message:"post updated successfully"})

@@ -5,9 +5,9 @@ export default (dependencies:any) => {
 
     const getUserDataController = async(req:Request,res:Response) => {
         try{ 
-            console.log("entered to get userdata controller")
+           
             const{email} = req.body
-            console.log("bodyyy",req.body)
+            
             const response = await getUserDataUsecase(dependencies)?.executeFunction(email)
             if(response){
                 const data = {

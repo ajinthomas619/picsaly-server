@@ -8,9 +8,7 @@ export default (dependencies:any) => {
     } = dependencies
 
     const singleUserSendFileController = async(req:Request,res:Response) => {
-        console.log("the body is",req.body)
-        console.log("the file",req.file)
-        console.log("the params",req.params)
+       
 
         const {senderId} = req.body
         const receiverId = req.params.userId
@@ -22,7 +20,7 @@ export default (dependencies:any) => {
             receiverId
         }
 
-        console.log("the data for sending file",data)
+        
 
         const response = await singleUserFileSendUsecase(dependencies).executeFunction(data)
         if(response.status){

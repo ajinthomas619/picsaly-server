@@ -9,7 +9,7 @@ export default(dependencies:any) => {
   const getCreatedPostController = async(req:Request,res:Response) => {
     try {
         const userId = req.params.id
-        console.log("usersrdrrfsdf",userId)
+      
         const response = await getCreatedPost_useCase(dependencies).executeFunction(userId)
         if(response.status){
             res.status(200).json({status:true,message:response.message,data:response.data})

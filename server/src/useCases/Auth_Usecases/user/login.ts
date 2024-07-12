@@ -8,17 +8,17 @@ export const userLogin_useCase = (dependencies:any) => {
 
  const executeFunction = async(email:string,password:string) => {
     const response = await userRepository?.findUser(email)
-    console.log("resp =>>>",response)
+   
 
     if(!response.status){
         return { status:false,message:response?.message}
     }
     else{
         const  user = response
-        console.log("hashed pass",user.finduser.basicInformation.password);
+        
         
         const validPass = await comparePassword(password,user.finduser.basicInformation.password)
-          console.log("validpass=>>",validPass)
+          
         if(validPass){
             const user_accessToken = createAccessToken(
                 user,

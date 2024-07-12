@@ -16,8 +16,7 @@ export default (dependencies:any) => {
                 commentId,
                 Liked
             )
-              console.log("the like body",req.body)
-              console.log("the comment id",commentId)
+             
             if(response.status){
                 res.status(200).json({status:true,message:response.message})
             }

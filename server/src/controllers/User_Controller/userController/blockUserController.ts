@@ -5,9 +5,9 @@ export default (dependencies:any) => {
 
     const blockUserController = async(req:Request,res:Response)=>{
         
-            console.log("entered to block user controller");
-            const userId = req.body.userid
-            const blockeduserid = req.body.userId
+           
+            const userId = req.body.userId
+            const blockeduserid = req.body.blockUserId
             
             const response = await BlockUser_Usecase(dependencies).executeFunction(userId,blockeduserid); 
             if(response.status){

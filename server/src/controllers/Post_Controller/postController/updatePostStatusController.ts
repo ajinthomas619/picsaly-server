@@ -7,7 +7,7 @@ export default (dependencies:any) => {
 
     const updatePostStatusController = async(req:Request,res:Response) => {
         try {
-            console.log("entered to update post status controller")
+            
             const {postId} = req.body
 
             const response = await updatePostStatusUsecase(dependencies).executeFunction(postId)

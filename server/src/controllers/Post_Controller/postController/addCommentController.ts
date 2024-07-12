@@ -9,7 +9,7 @@ export default (dependencies: any) => {
     try {
       const postId = req.body.postId;
       const { userId, name: username, comment: text } = req.body;
-      console.log("req.body",req.body)
+     
 
       const comment = {
         userId,

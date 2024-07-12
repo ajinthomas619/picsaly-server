@@ -9,9 +9,10 @@ export default (dependencies:any) => {
 
     const sendMessageController = async(req:Request,res:Response) => {
         try {
-            console.log("entered to sendMessage controller")
+            
             const reciverId = req.params.userId
             const {senderId,message} = req.body
+            
 
             const response = await sendMessageUsecase(dependencies).executeFunction(senderId,reciverId,message)
             

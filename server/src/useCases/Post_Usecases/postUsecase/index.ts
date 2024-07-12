@@ -18,6 +18,7 @@ import { getMonthlyPostCountUsecase } from "./getMonthlyPostCountUsecase"
 import { reportPostUsecase } from "./reportPostUsecase"
 import { updatePostStatusUsecase } from "./updatePostStatusUsecase"
 import { showAllPostForAdminUsecase } from "./showAllPostForAdminUsecase"
+import { showPostForHomeUsecase } from "./showPostForHomeUsecase"
 
 export{
     AddPost_Usecase,
@@ -38,6 +39,7 @@ export{
     getMonthlyPostCountUsecase,
     reportPostUsecase,
     updatePostStatusUsecase,
-    showAllPostForAdminUsecase
+    showAllPostForAdminUsecase,
+    showPostForHomeUsecase
  
 }

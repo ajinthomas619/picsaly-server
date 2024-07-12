@@ -6,7 +6,7 @@ export default(dependencies:any) => {
     const getLikedPostController = async(req:Request,res:Response) => {
         try{
             const userId = req.params.id
-            console.log("user id for getting liked post",userId)
+            
             const response = await getLikedPosts_useCase(dependencies).executeFunction(userId)
             if(response.status){
                 return res.status(200).json({status:true,data:response.data})

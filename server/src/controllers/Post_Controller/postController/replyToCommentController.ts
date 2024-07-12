@@ -18,7 +18,7 @@ export default(dependencies:any) =>{
                 res.status(200).json({
                     status:true,
                     message:response.message,
-                    data:response.data
+                    data:response.reply
                 })
             }else{
                 res.status(400).json({status:false,message:"failed to  replu to comment"})

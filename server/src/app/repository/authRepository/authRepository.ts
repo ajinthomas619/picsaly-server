@@ -22,11 +22,7 @@ catch(error){
 
 
     createUser: async(data: any) => {
-        console.log("enterred to create user");
-        
-   
-     console.log("data for vewri",data);
-     
+       
         const userData = {
             username:data.username,
             fullname:data.fullname,
@@ -34,10 +30,10 @@ catch(error){
             password: data.password, 
             mobile: data.mobile,
         }
-        console.log("the user dataa for",userData);
+       
         
         const user = await User.create(userData)
-        console.log(user,"helllaaa")
+     
        if(user){
         return{status: true,message:"user created successfully",user}
        }
@@ -51,7 +47,6 @@ catch(error){
     findUser:async(email:string) =>{
         try{
             const user = await User.find({email:email,'basicInformation.isBlocked':false})
-            console.log("the user detaols",user)
             if(user){
                 
                     return{status:true,user:user}

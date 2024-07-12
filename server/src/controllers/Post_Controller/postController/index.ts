@@ -17,6 +17,7 @@ import getMonthlyPostCountController from "./getMonthlyPostCountController";
 import reportPostController from "./reportPostController";
 import updatePostStatusController from "./updatePostStatusController";
 import showAllPostForAdminController from "./showAllPostForAdminController";
+import showPostForHomeController from "../showPostForHomeController";
 export default (dependencies: any) => {
     return{
         showAllPostController:showAllPostController(dependencies),
@@ -37,7 +38,8 @@ export default (dependencies: any) => {
         getMonthlyPostCountController:getMonthlyPostCountController(dependencies),
         reportPostController:reportPostController(dependencies),
         updatePostStatusController:updatePostStatusController(dependencies),
-        showAllPostForAdminController:showAllPostForAdminController(dependencies)
+        showAllPostForAdminController:showAllPostForAdminController(dependencies),
+        showPostForHomeController:showPostForHomeController(dependencies)
 
     }
 }

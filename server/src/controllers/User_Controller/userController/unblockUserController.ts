@@ -7,7 +7,7 @@ export  default (dependencies:any) => {
 
     const unblockUserController = async(req:Request,res:Response) => {
         const userId = req.body.userId
-        const unblockUserId = req.body
+        const unblockUserId = req.body.unblockUserId
         const response = await UnblockUser_Usecase(dependencies).executeFunction(userId,unblockUserId)
         if(response.status){
             res.status(200).json({status:true,message:response.message})

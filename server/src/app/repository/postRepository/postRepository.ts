@@ -2,7 +2,7 @@ import {
   PostData,
   Userdata,
   CommentObject,
-  reportObject
+  reportObject,
 } from "../../../utils/interface/interface";
 import { User } from "../../database/userModel";
 import { Post } from "../../database/postModel";
@@ -14,7 +14,6 @@ export default {
     try {
       const { image, data } = dataa;
       const postData = { image, ...data };
-      console.log("postData", postData);
 
       const response = await Post.create(postData);
 
@@ -22,7 +21,6 @@ export default {
         const postWithUser = (await Post.findById(response._id).populate(
           "createdBy"
         )) as PostData;
-        console.log("hello post with user", postWithUser.createdBy.name); // Access the username of the user who created the post
 
         return {
           status: true,
@@ -37,11 +35,16 @@ export default {
       return { status: false, message: (error as Error).message };
     }
   },
-  showAllPost: async () => {
+  showAllPost: async (userId: string) => {
     try {
-      const response = await Post.find({ Visibility: true }).populate(
-        "createdBy"
-      );
+      const user = await User.findById(userId);
+
+      const blockedUsers = user?.socialConnections?.blockedUsers;
+
+      const response = await Post.find({
+        Visibility: true,
+        createdBy: { $nin: blockedUsers, $ne: userId },
+      }).populate("createdBy");
       if (response) {
         return { status: true, data: response };
       } else {
@@ -51,10 +54,29 @@ export default {
       console.log("error in showallpost", error);
     }
   },
+  showPostForHome: async (userId: string) => {
+    try {
+      const user = await User.findById(userId);
+
+      const blockedUsers = user?.socialConnections?.blockedUsers;
+      const following = user?.socialConnections?.Following;
+
+      const response = await Post.find({
+        Visibility: true,
+        createdBy: { $nin: blockedUsers, $ne: userId, $in: following },
+      }).populate("createdBy");
+      if (response) {
+        return { status: true, data: response };
+      } else {
+        return { status: false, message: "No Post have been found" };
+      }
+    } catch (error) {
+      console.log("error in showpost for home", error);
+    }
+  },
 
   editPost: async (id: string, data: PostData) => {
     try {
-      console.log("dataa =>", data);
       const response = await Post.findByIdAndUpdate(
         id,
         {
@@ -64,7 +86,7 @@ export default {
         },
         { new: true }
       );
-      console.log("response  of edit post repo", response);
+
       if (response) {
         return { status: true, updatedPost: response };
       } else {
@@ -94,7 +116,7 @@ export default {
     try {
       let updateQuery;
       let message;
-      let operationStatus
+      let operationStatus;
 
       const postObjectId = new Types.ObjectId(postId);
 
@@ -116,7 +138,7 @@ export default {
           $push: { Likes: { userId: userId, likescount: 1 } },
         };
         message = "liked";
-        operationStatus = true
+        operationStatus = true;
       } else {
         updateQuery = {
           $pull: { Likes: { userId: userId } },
@@ -167,7 +189,7 @@ export default {
           $push: { comments: comment },
         },
         { new: true }
-      );
+      ).populate("comments.userId");
 
       const comments = response?.comments;
 
@@ -183,38 +205,43 @@ export default {
   },
   getPost: async (id: string) => {
     try {
-      const response = await Post.findById(id).populate('comments.userId');
+      const response = await Post.findById(id).populate("comments.userId");
 
       if (!response) {
         return { status: false, message: "no such post found" };
       } else {
-        const postwithUser = await Post.findById(response._id).populate(
-          "createdBy"
-        );
+        const postwithUser = await Post.findById(response._id)
+          .populate("createdBy")
+          .populate("comments.userId")
+          .populate("comments.replies.userId");
+
         return { status: true, data: postwithUser };
       }
     } catch (error) {
       console.log("error in fetching post", error);
     }
   },
-  replyToComment: async (commentId:string, commentData: CommentObject,postId:String) => {
+  replyToComment: async (
+    commentId: string,
+    commentData: CommentObject,
+    postId: String
+  ) => {
     try {
-      
       const post = await Post.findById(postId);
-      console.log("the post ",post)
-      
+
       if (!post) {
         return { status: false, message: "Post not found" };
       }
       const comment = post?.comments.find(
         (comment: any) => comment?._id?.toString() === commentId
       );
-      console.log("the comment",comment)
+
       if (!comment) {
         return { status: false, message: "Comment not found" };
       }
       comment.replies.push(commentData);
       const replies = await post.save();
+      console.log("repliesssss", replies);
       if (replies) {
         return {
           status: true,
@@ -227,18 +254,24 @@ export default {
       return { status: false, message: "error in adding reply" };
     }
   },
-  editComment: async (postId: string, commentData: string,commentId:string) => {
+  editComment: async (
+    postId: string,
+    commentData: string,
+    commentId: string
+  ) => {
     try {
-     
       const post = await Post.findById(postId);
-   
-      const commentObjectId = new Types.ObjectId(commentId)
-      
+
+      const commentObjectId = new Types.ObjectId(commentId);
+
       if (!post) {
         return { status: false, message: "Post not found" };
       }
-      const comment = post.comments.find(comment => comment && comment._id && comment._id.equals(commentObjectId));
-      console.log("the comment",comment)
+      const comment = post.comments.find(
+        (comment) =>
+          comment && comment._id && comment._id.equals(commentObjectId)
+      );
+
       if (!comment) {
         return { status: false, message: "comment not found" };
       }
@@ -262,23 +295,20 @@ export default {
   ) => {
     try {
       if (!Liked) {
-        console.log("the comment idddddddddd",commentId)
-        console.log("the userssss idddd",userId)
-
         const post = await Post.findById(postId);
-        console.log("the like comme",post)
+
         if (!post) {
           return { status: false, message: "post not found" };
         }
         const comment = post.comments.find(
           (comment) => comment?._id?.toString() === commentId
         );
-        console.log("the like commewnt",comment)
+
         if (!comment) {
           return { status: false, message: "Comment not found" };
         }
         if (comment.likes.includes(userId)) {
-            comment.likes = comment.likes.filter((id) => id !== userId)
+          comment.likes = comment.likes.filter((id) => id !== userId);
         }
         comment.likes.push(userId);
 
@@ -295,15 +325,12 @@ export default {
 
   deleteComment: async (postId: string, commentId: string) => {
     try {
-      console.log("the comment id",commentId);
-      
       const response = await Post.findByIdAndUpdate(
         postId,
         { $pull: { comments: { _id: commentId } } },
         { new: true }
       );
-      console.log("response for delete comment",response);
-      
+
       if (response) {
         return { status: true, message: "comment deleted successfully" };
       } else {
@@ -331,7 +358,6 @@ export default {
   },
   getSavedPosts: async (userId: any) => {
     try {
-      console.log("useriod", userId);
       const id = userId.userId;
       const posts = await User.findById(id)
         .populate({
@@ -339,7 +365,7 @@ export default {
           model: "Post",
         })
         .exec();
-      console.log("posts from saved post", posts?.activity?.saved);
+
       const savedpost = posts?.activity?.saved;
       if (savedpost) {
         return { status: true, message: "posts found", posts: savedpost };
@@ -375,7 +401,7 @@ export default {
           model: "Post",
         })
         .exec();
-      console.log("post for liked post", posts?.activity?.likes);
+
       const likedposts = posts?.activity?.likes;
       if (likedposts) {
         return { status: true, message: "posts found", data: likedposts };
@@ -391,83 +417,83 @@ export default {
     try {
       const postsPerMonth = await Post.aggregate([
         {
-          $group:{
-            _id:{$month:"$createdAt"},
-            count:{$sum:1}
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
           },
-        },{
-          $sort:{_id:1},
-        }
-      ])
+        },
+        {
+          $sort: { _id: 1 },
+        },
+      ]);
 
-      const resultArray = postsPerMonth.map((item) =>( {
-        x:item._id,
-        y:item.count,
-      }))
-      if(postsPerMonth){
-        return{
-          status:true,
-          message:"count successfull",
-          postsPerMonth:resultArray
-        }
+      const resultArray = postsPerMonth.map((item) => ({
+        x: item._id,
+        y: item.count,
+      }));
+      if (postsPerMonth) {
+        return {
+          status: true,
+          message: "count successfull",
+          postsPerMonth: resultArray,
+        };
       }
     } catch (error) {
-      console.log("error in getting monthlyPostCount  repo",error)
-      return {status:false,message:"count unsuccessfull"}
-      
+      console.log("error in getting monthlyPostCount  repo", error);
+      return { status: false, message: "count unsuccessfull" };
     }
   },
-  reportPost:async(postId:string,userId:String,reportObject:reportObject) =>{
+  reportPost: async (
+    postId: string,
+    userId: String,
+    reportObject: reportObject
+  ) => {
     try {
-      console.log("the userID",userId)
-    const post = await Post.findById(postId)
-      const response = post?.reportedUsersList.push(userId)
-      await post?.save()
-      console.log("the response",response)
-      if(response){
-        return {status:true,message:"reported successfully"}
-      }
-      else{
-        return {status:false,message:"report unsuccessfull"}
-      }
-    } catch (error) {
-      console.log("error in reporting post",error)
-      return {status:false,message:"report unsuccessfull"}
-    }
-  },
-  updatePostStatus:async(postId:string) =>{
-    try {
-      const post = await Post.findById(postId)
-      if(!post){
-        console.log("post not found")
-        return
-      }
-    
-      post.Visibility = !post.Visibility
-      await post.save()
+      const post = await Post.findById(postId);
+      const response = post?.reportedUsersList.push(userId);
+      await post?.save();
 
-      if(post){
-        return{status:true,message:"post status changed",post:post}
-      }
-      else{
-        return{status:false,message:"something error occured"}
+      if (response) {
+        return { status: true, message: "reported successfully" };
+      } else {
+        return { status: false, message: "report unsuccessfull" };
       }
     } catch (error) {
-      console.log("error in updating post status",error)
-      return {status:false,message:"internal server error"}
+      console.log("error in reporting post", error);
+      return { status: false, message: "report unsuccessfull" };
     }
   },
-  showAllPostForAdmin:async() => {
+  updatePostStatus: async (postId: string) => {
     try {
-      const response = await Post.find({}).populate("createdBy")
-      if(response) {
-        return {status:true,data:response}
+      const post = await Post.findById(postId);
+      if (!post) {
+        console.log("post not found");
+        return;
       }
-      else{
-        return{status:false,message:"nothing found"}
+
+      post.Visibility = !post.Visibility;
+      await post.save();
+
+      if (post) {
+        return { status: true, message: "post status changed", post: post };
+      } else {
+        return { status: false, message: "something error occured" };
       }
     } catch (error) {
-      console.log("error in finding post for admin",error)
+      console.log("error in updating post status", error);
+      return { status: false, message: "internal server error" };
     }
-  }
+  },
+  showAllPostForAdmin: async () => {
+    try {
+      const response = await Post.find({}).populate("createdBy");
+      if (response) {
+        return { status: true, data: response };
+      } else {
+        return { status: false, message: "nothing found" };
+      }
+    } catch (error) {
+      console.log("error in finding post for admin", error);
+    }
+  },
 };

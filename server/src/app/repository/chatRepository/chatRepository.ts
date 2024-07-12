@@ -24,7 +24,7 @@ export default {
         const newMessage = new Message({
           senderId,
           reciverId,
-          message,
+          message
         });
         if (newMessage) {
           newConversation.messages.push(newMessage._id);
@@ -227,7 +227,7 @@ export default {
 
             newConversation.messages.push(newMessage._id);
             if (receiverSocketId) {
-                io.to(receiverSocketId).emit("newMessage", newMessage);
+                io.to(receiverSocketId).emit("newMessages", newMessage);
             }
 
             const [savedConversation, savedMessage] = await Promise.all([
@@ -250,7 +250,7 @@ export default {
             
 
             if (receiverSocketId) {
-              io.to(receiverSocketId).emit("newMessage", newMessage);
+              io.to(receiverSocketId).emit("newMessages", newMessage);
             }
             
             const savedMessage = await newMessage.save();
@@ -345,6 +345,7 @@ console.log("the response for group chat",response)
   },
   deleteMessage:async(messageId:string) => {
     try {
+      console.log("the message id for repos",messageId)
       const messages = await Message.findByIdAndDelete(messageId)
       if(messages){
         return {status:true,message:"message deleted"}
