@@ -222,7 +222,7 @@ export default {
       return { status: true, message: "users found", data: userData };
     }
   },
-  // Adjust the import based on your project structure
+  
 
   followUser: async (currentUserId: string, followedUserId: string) => {
     try {

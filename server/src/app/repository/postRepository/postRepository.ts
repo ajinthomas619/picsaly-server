@@ -54,7 +54,8 @@ export default {
       console.log("error in showallpost", error);
     }
   },
-  showPostForHome: async (userId: string) => {
+  showPostForHome: async (userId: string,page:any,limit:any) => {
+    const skip = (page - 1)*limit
     try {
       const user = await User.findById(userId);
 
@@ -64,8 +65,12 @@ export default {
       const response = await Post.find({
         Visibility: true,
         createdBy: { $nin: blockedUsers, $ne: userId, $in: following },
-      }).populate("createdBy");
-      if (response) {
+      }).populate("createdBy")
+      .skip(skip)
+      .limit(limit)
+      .exec();
+      console.log("the response is ",response)
+      if (response.length > 0) {
         return { status: true, data: response };
       } else {
         return { status: false, message: "No Post have been found" };
