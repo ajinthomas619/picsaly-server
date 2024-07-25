@@ -5,7 +5,7 @@ mongoose.set("strictQuery",true);
 const connectDB = async() => {
     try{
     console.log("Entering db");
-    await mongoose.connect('mongodb://localhost:27017/picsaly-server')
+    await mongoose.connect('mongodb+srv://ajinthomas619:Motog31@cluster0.u9qv5iq.mongodb.net/picsaly-server')
       console.log("Connected to the mongodb database")
     
 }
