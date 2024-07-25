@@ -30,8 +30,11 @@ jobs:
     steps:
       - name: Pull image from Docker Hub
         run: docker pull ajinthomas619/picsaly-server:latest
+        
+      - name: Delete old container
+        run: docker rm -f picsaly-server || true
 
       - name: Run Docker container
         env:
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-        run: docker run -d -p 3000:3000 -e MONGO_PASSWORD=$MONGO_PASSWORD ajinthomas619/picsaly-server:latest
+        run: docker run -d -p 3000:3000 -e MONGO_PASSWORD=$MONGO_PASSWORD --name picsaly-server ajinthomas619/picsaly-server:latest
