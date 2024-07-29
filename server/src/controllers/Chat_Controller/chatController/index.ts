@@ -22,7 +22,7 @@ export default (dependencies:any) => {
         singleUserSendFileController:singleUserSendFileController(dependencies),
         createNewGroupController:createNewGroupController(dependencies),
         deleteMessageController:deleteMessageController(dependencies),
-        getAllGroupOfusersController:getAllGroupOfusersController(dependencies),
+        getAllGroupOfUsersController:getAllGroupOfusersController(dependencies),
         getGroupDataByIdController:getGroupDataByIdController(dependencies),
         getGroupMessagesController:getGroupMessagesController(dependencies),
         groupSendFileController:groupSendFileController(dependencies),

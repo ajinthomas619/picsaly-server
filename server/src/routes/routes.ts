@@ -78,7 +78,6 @@ const{
     sendMessageController,
     conversationController,
     deleteMessageController,
-    getAllGroupOfusersController,
     getGroupDataByIdController,
     sendGroupMessageController,
     groupSendFileController,
@@ -165,7 +164,6 @@ router.post('/sendGroupMessage',sendGroupMessageController)
 router.post('/sendVoiceMessage',uploadChat.single('audio'),singleUserSendFileController)
 router.post('/groupVoiceMessage',uploadChat.single('audio'),sendVoiceMessageController)
 router.post('/sendFile/:userId',uploadChat.single('file'),singleUserSendFileController)
-router.get('/getAllGroupOfUsers',getAllGroupOfusersController)
 router.get('/getSingleGroupMessage',getGroupMessagesController)
 router.get('/getGroupDataById',getGroupDataByIdController)
 router.post("/videocall/:receiverId",verifyUser,videoCallController)
